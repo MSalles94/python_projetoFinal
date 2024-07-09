@@ -75,7 +75,7 @@ class ler_dados():
 
     def __tratar_categorizar_restaurantes(self):
         dados=self.dados
-        dados['Cuisines']=dados['Cuisines'].map(lambda x:str(x).split(',')[0])
+        dados['main_Cuisines']=dados['Cuisines'].map(lambda x:str(x).split(',')[0])
 
     def exportar_df(self):
         return self.dados
