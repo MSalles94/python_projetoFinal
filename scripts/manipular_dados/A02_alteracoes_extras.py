@@ -2,6 +2,7 @@ def tratamento_cientista(dados):
     #tratamento aplicado pelo cientista de dados
     dados=__moeda_dolar(dados)
     dados=__valores_boleanos(dados)
+    #dados=__limpar_dados(dados)
 
     #remover colunas sem valor
     dados=dados.drop(columns=['Switch_to_order_menu'])
@@ -44,4 +45,13 @@ def __valores_boleanos(dados):
 
     return dados
 
+def __limpar_dados(dados):
+    #remover outlier
+    dados=dados.copy()
 
+    filtro=((dados['Average Cost for two']==25000017)&
+            (dados['Restaurant ID']==16608070))
+    dados.loc[filtro,'Average Cost for two']=250
+
+
+    return dados
