@@ -2,7 +2,7 @@ def tratamento_cientista(dados):
     #tratamento aplicado pelo cientista de dados
     dados=__moeda_dolar(dados)
     dados=__valores_boleanos(dados)
-    #dados=__limpar_dados(dados)
+    dados=__limpar_dados(dados)
 
     #remover colunas sem valor
     dados=dados.drop(columns=['Switch_to_order_menu'])
@@ -35,8 +35,8 @@ def __moeda_dolar(dados):
 def __valores_boleanos(dados):
     #alterar boleanos para sim/não
     sim_nao={
-        1:'SIM',
-        0:'NÃO'
+        1:'YES',
+        0:'NO'
     }
     colunas=['Has_Table_booking','Has_Online_delivery', 'Is_delivering_now']
 
@@ -49,9 +49,9 @@ def __limpar_dados(dados):
     #remover outlier
     dados=dados.copy()
 
-    filtro=((dados['Average Cost for two']==25000017)&
-            (dados['Restaurant ID']==16608070))
-    dados.loc[filtro,'Average Cost for two']=250
+    filtro=((dados['Average_Cost_for_two']==25000017)&
+            (dados['Restaurant_ID']==16608070))
+    dados=dados[~filtro]
 
 
     return dados

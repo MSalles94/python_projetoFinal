@@ -9,24 +9,24 @@ def barra_lateral_padrao(data,st):
 
     #FILTROS
 
-    opcoes=['SIM', 'NÃO']
-    Has_Table_booking=st.sidebar.multiselect('Faz reserva',opcoes,default=opcoes)
+    opcoes=['YES', 'NO']
+    Has_Table_booking=st.sidebar.multiselect('Accept Booking',opcoes,default=opcoes)
 
-    opcoes=['SIM', 'NÃO']
-    Is_delivering_now=st.sidebar.multiselect('Faz entregas',opcoes,default=opcoes)
+    opcoes=['YES', 'NO']
+    Is_delivering_now=st.sidebar.multiselect('Is delivering',opcoes,default=opcoes)
 
-    opcoes=['SIM', 'NÃO']
-    Has_Online_delivery=st.sidebar.multiselect('Aceita pedidos online',opcoes,default=opcoes)
+    opcoes=['YES', 'NO']
+    Has_Online_delivery=st.sidebar.multiselect('Accept online orders',opcoes,default=opcoes)
 
 
-    opcoes=['expencive', 'gourmet', 'normal', 'cheap']
-    Price_range=st.sidebar.multiselect('Faixas de preço',opcoes,default=opcoes)
+    opcoes=['expensive', 'gourmet', 'normal', 'cheap']
+    Price_range=st.sidebar.multiselect('Price Range',opcoes,default=opcoes)
 
     opcoes=['Philippines', 'Brazil', 'Australia', 'United States of America',
         'Canada', 'Singapure', 'United Arab Emirates', 'India',
         'Indonesia', 'New Zeland', 'England', 'Qatar', 'South Africa',
         'Sri Lanka', 'Turkey']
-    Country_name=st.sidebar.multiselect('País',opcoes,default=opcoes)
+    Country_name=st.sidebar.multiselect('Country',opcoes,default=opcoes)
 
     st.sidebar.markdown("""---""")
 
