@@ -48,10 +48,13 @@ Ele tem algumas perguntas que devem ser respondidas usando dashboards.
 
 * Cidade
     1. Qual o nome da cidade que possui mais restaurantes registrados?
+    
     2. Qual o nome da cidade que possui mais restaurantes com nota média acima de 4?
     3. Qual o nome da cidade que possui mais restaurantes com nota média abaixo de 2.5?
+
     4. Qual o nome da cidade que possui o maior valor médio de um prato para dois?
     5. Qual o nome da cidade que possui a maior quantidade de tipos de culinária distinas?
+    
     6. Qual o nome da cidade que possui a maior quantidade de restaurantes que fazem reservas?
     7. Qual o nome da cidade que possui a maior quantidade de restaurantes que fazem entregas?
     8. Qual o nome da cidade que possui a maior quantidade de restaurantes que aceitam pedidos online?

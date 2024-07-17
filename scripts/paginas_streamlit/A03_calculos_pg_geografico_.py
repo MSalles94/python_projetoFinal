@@ -32,8 +32,10 @@ def avg_price_for_two(dados):
     aux_df=round(aux_df['Average_Cost_for_two'].mean(),2)
 
     return aux_df
-
-
+#=======================================
+#=======================================
+#COUNTRIES
+#=======================================
 #=======================================
 #DATAFRAME WITH GENERAL INFORMATIONS
 #=======================================
@@ -145,35 +147,88 @@ def generate_geral_df(dados):
 #graphs
 #=======================================
 def grafico_cities(dados):
-    import plotly.express as px
+    from plotly.express import bar
     aux_df=dados[['Country_name','City']].drop_duplicates()
     aux_df=aux_df.groupby(['Country_name']).count().reset_index().sort_values(by='City',ascending=False)
 
-    fig=px.bar(aux_df,x='Country_name',y='City')
+    fig=bar(aux_df,x='Country_name',y='City')
     return fig
 
 def graph_deliver_or_booking(dados):
-    import plotly.express as px
+    from plotly.express import pie
     aux_df=dados[['Restaurant_ID','Is_delivering_now','Has_Table_booking']].drop_duplicates()
     aux_df['Class']='Deliver and Booking'    
     aux_df.loc[((aux_df['Is_delivering_now']=='YES')&(aux_df['Has_Table_booking']=='NO')),'Class']='Only Deliver'                                   
     aux_df.loc[((aux_df['Is_delivering_now']=='NO')&(aux_df['Has_Table_booking']=='YES')),'Class']='Only Booking'
     aux_df.loc[((aux_df['Is_delivering_now']=='NO')&(aux_df['Has_Table_booking']=='NO')),'Class']='None'
     aux_df=aux_df.groupby(['Class']).count().reset_index()                                                                                                                                                                                                                                                                                         
-    fig=px.pie(aux_df,names='Class',values='Restaurant_ID')
+    fig=pie(aux_df,names='Class',values='Restaurant_ID')
     return fig
 
 
 def graph_priceRange(dados):
-    import plotly.express as px
+    from plotly.express import bar
     aux_df=dados[['Restaurant_ID','Average_Cost_for_two','Price_range','Has_Table_booking']].drop_duplicates()
     aux_df=aux_df.groupby(['Price_range'])[['Average_Cost_for_two']].mean().reset_index().sort_values(by='Average_Cost_for_two').round(2)                                                                                                                                                                                                                                                                                                                                                   
-    fig=px.bar(aux_df,x='Price_range',y='Average_Cost_for_two',color='Price_range')
+    fig=bar(aux_df,x='Price_range',y='Average_Cost_for_two',color='Price_range')
     return fig
 
 def graph_priceRange_country(dados):
-    import plotly.express as px
+    from plotly.express import scatter
     aux_df=dados[['Country_name','Restaurant_ID','Average_Cost_for_two','Price_range','Has_Table_booking']].drop_duplicates()
     aux_df=aux_df.groupby(['Country_name','Price_range'])[['Average_Cost_for_two']].mean().reset_index().sort_values(by=['Country_name','Average_Cost_for_two']).round(2)                                                                                                                                                                                                                                                                                                                                                   
-    fig=px.scatter(aux_df,x='Country_name',y='Price_range',size='Average_Cost_for_two',color='Price_range')
+    fig=scatter(aux_df,x='Country_name',y='Price_range',size='Average_Cost_for_two',color='Price_range')
     return fig
+
+#=======================================
+#=======================================
+#CITIES
+#=======================================
+
+def top_feature_city(dados,feature='Has_Table_booking'):
+
+    aux_df=dados[['City','Restaurant_ID',feature]].drop_duplicates()    
+    aux_df['restaurants']=1
+    aux_df=aux_df.groupby(['City',feature])[['restaurants']].sum().reset_index()
+    aux_df = aux_df.pivot(index='City', columns=feature, values='restaurants').fillna(0)
+    aux_df=aux_df.sort_values(by='YES',ascending=False).reset_index()
+    aux_df=aux_df[:10]
+
+    aux_df=aux_df.rename(columns={'YES':'restaurants'})
+
+
+    from plotly.express import bar
+    fig=bar(aux_df,x='restaurants',y='City',orientation='h',color='City')
+    fig.update_layout(showlegend=False)
+    return fig
+
+def top_cities_ratings(dados):
+    aux_df=dados.copy()
+    aux_df=aux_df[['City','Restaurant_ID','Aggregate_rating']].drop_duplicates()
+    aux_df['restaurants']=1
+     
+    bins = [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]
+    labels = ['0-0.5', '0.5-1', '1-1.5', '1.5-2', '2-2.5', '2.5-3', '3-3.5', '3.5-4', '4-4.5', '4.5-5']
+
+    from pandas import cut
+    aux_df['grupo'] = cut(aux_df['Aggregate_rating'], bins, labels=labels)
+    aux_df=aux_df.groupby(['City','grupo'])[['restaurants']].sum().reset_index()
+    aux_df=aux_df.pivot(index='City', columns='grupo', values='restaurants').reset_index()
+
+    aux_df['TOP+4']=aux_df[['4-4.5', '4.5-5']].sum(axis=1)
+    aux_df= aux_df.sort_values(by='TOP+4',ascending=False)
+    aux_df['TOP+4']=range(1,len(aux_df)+1)
+
+    aux_df['TOP-2.5']=aux_df[['0-0.5', '0.5-1', '1-1.5', '1.5-2', '2-2.5']].sum(axis=1)
+    aux_df= aux_df.sort_values(by='TOP-2.5',ascending=False)
+    aux_df['TOP-2.5']=range(1,len(aux_df)+1)
+
+
+    top_4=aux_df[(aux_df['TOP+4']<=10)].sort_values(by='TOP+4')
+    top_25=aux_df[(aux_df['TOP-2.5']<=10)].sort_values(by='TOP-2.5')
+
+    top_4=top_4.drop(columns=['TOP+4','TOP-2.5']).reset_index(drop=True).set_index('City')
+    top_25=top_25.drop(columns=['TOP+4','TOP-2.5']).reset_index(drop=True).set_index('City')
+
+    return top_4,top_25
+
