@@ -232,3 +232,93 @@ def top_cities_ratings(dados):
 
     return top_4,top_25
 
+def Resume_city_info(dados):
+    dados=dados.copy()
+
+    def register_restaurant(dados):
+        aux_df=dados[['Restaurant_ID','City']].drop_duplicates()
+        aux_df=aux_df.groupby(['City']).count().rename(columns={'Restaurant_ID':'Restaurants'})
+        return aux_df
+    
+    def cuisines_city(dados):
+        aux_df=dados[['main_Cuisines','City']].drop_duplicates()
+        aux_df=aux_df.groupby(['City']).count().rename(columns={'main_Cuisines':'Cuisines'})
+        return aux_df
+    
+    def meal_cost_two(dados):
+        aux_df=dados[['City','Restaurant_ID','Average_Cost_for_two']].drop_duplicates()
+        aux_df=aux_df.groupby(['City'])[['Average_Cost_for_two']].mean().rename(columns={'Average_Cost_for_two':'mean_cost'})
+        return aux_df
+    
+    def priceRange(dados,price_range='cheap'):
+        aux_df=dados[['City','Restaurant_ID','Price_range']].drop_duplicates()
+        aux_df=aux_df[aux_df['Price_range']==price_range]
+        col=f'price_{price_range}'
+        aux_df=aux_df.groupby(['City'])[['Price_range']].count().rename(columns={'Price_range':col})
+        return aux_df[col]
+    
+    dataframe=[]
+
+    dataframe.append(register_restaurant(dados))
+    dataframe.append(cuisines_city(dados))
+    dataframe.append(meal_cost_two(dados))   
+    dataframe.append(priceRange(dados,price_range='cheap'))   
+    dataframe.append(priceRange(dados,price_range='normal'))   
+    dataframe.append(priceRange(dados,price_range='expensive'))   
+    dataframe.append(priceRange(dados,price_range='gourmet'))   
+    
+    from pandas import concat
+    resposta=concat(dataframe,axis=1).fillna(0)
+    return resposta
+
+def pie_priceRange(dados):
+    aux_df=dados.copy()
+    aux_df=aux_df[['Price_range','Restaurant_ID']].drop_duplicates()
+    aux_df=aux_df.groupby(['Price_range']).count().reset_index().rename(columns={'Restaurant_ID':'Restaurants'})
+
+    from plotly.express import pie
+    color_map={
+        'cheap':'green',
+        'normal':'blue',
+        'expensive':'yellow',
+        'gourmet':'red'
+    }
+
+    fig=pie(aux_df,names='Price_range',values='Restaurants', color_discrete_map=color_map,color='Price_range')
+
+    return fig
+
+def mapa_folium(dados):
+    aux_df=dados.copy()
+    aux_df=aux_df[['Country_name','City','Longitude','Latitude','main_Cuisines','Restaurant_Name']].drop_duplicates()
+    aux_df=aux_df
+    #gerar mapa
+    center_lon=aux_df['Longitude'].mean()
+    center_lat=aux_df['Latitude'].mean()
+    import folium
+    from folium.plugins import MarkerCluster
+    map = folium.Map(location=[center_lat, center_lon],zoom_start=2)
+
+    marker_cluster = MarkerCluster().add_to(map)
+
+    #colocar marcadores
+    for restaurant in aux_df.index:
+        lat,lon=aux_df.loc[restaurant,['Latitude','Longitude']]
+        country,city,cuisine,name=aux_df.loc[restaurant,['Country_name','City','main_Cuisines','Restaurant_Name']]
+        popup=f"""
+        <h1><b>{name} </b></h1>
+        <h3><b>Country: </b>{country}</h2> <br>
+        <h3><b>City: </b>{city}</h2> <br>
+        <h3><b>Cuisine: </b>{cuisine}</h2> <br>
+            
+            """
+        popup=folium.Popup(popup, max_width=300)
+    
+        folium.Marker(
+            location=[lat, lon],
+            popup=popup,
+            icon=folium.Icon(color="blue", icon="info-sign"),
+        ).add_to(marker_cluster)
+
+    
+    return map
