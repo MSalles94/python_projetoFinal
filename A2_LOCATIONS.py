@@ -121,13 +121,26 @@ with v_city:
         rating_4,rating_25=respostas.top_cities_ratings(dados)
 
         with v_1:
-            st.markdown('#### Top more than rate 4+ cities')
+            st.markdown('#### Rate upper than 4+')
             st.dataframe(rating_4)
         with v_2:
-            st.markdown('#### Top Less than rate 2.5- cities')
+            st.markdown('#### Rate Less than 2.5-')
             st.dataframe(rating_25)
     
     with st.container():
+        v_1,v_2=st.columns(2)
+        with v_1:
+            st.markdown('### Price Range')
+            st.plotly_chart(respostas.pie_priceRange(dados),use_container_width=True)
+
+        with v_2:
+            st.markdown('### General information')
+            
+            st.dataframe(respostas.Resume_city_info(dados))
         pass
 
+with v_map:
+    from streamlit_folium import st_folium
+
+    st_folium(respostas.mapa_folium(dados), width=700, height=500)
     
