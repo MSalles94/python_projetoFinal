@@ -287,7 +287,6 @@ def pie_priceRange(dados):
     fig=pie(aux_df,names='Price_range',values='Restaurants', color_discrete_map=color_map,color='Price_range')
 
     return fig
-
 def mapa_folium(dados):
     aux_df=dados.copy()
     aux_df=aux_df[['Country_name','City','Longitude','Latitude','main_Cuisines','Restaurant_Name']].drop_duplicates()
