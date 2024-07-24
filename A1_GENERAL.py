@@ -28,34 +28,7 @@ st.header('GENERAL VIEW')
 #FUNCTIONS TO DATA
 #========================================
 
-def unique_restaurants():
-    answer=len(dados['Restaurant_ID'].drop_duplicates())
-    return answer
-def unique_contries():
-    answer=len(dados['Country_name'].drop_duplicates())
-    return answer
-def unique_cities():
-    answer=len(dados['City'].drop_duplicates())
-    return answer
-def unique_votes():
-    answer=len(dados['Votes'].drop_duplicates())
-    return answer
-def unique_cuisines():
-    answer=len(dados['main_Cuisines'].drop_duplicates())
-    return answer
-def list_of_restaurants(data):
-    aux_df=dados.copy()
-    aux_df['Restaurant_ID']=aux_df['Restaurant_ID'].astype(str)
-    aux_df=aux_df.set_index('Restaurant_ID')
-    columns= {  'Restaurant_Name':'Name',
-                'Country_name':'Country',
-                'City':'City',
-                'Votes':'Votes',
-                'main_Cuisines':'main_Cuisines'}
-    aux_df=aux_df[columns.keys()].rename(columns=columns)
-    aux_df=aux_df.drop_duplicates()
-
-    return aux_df
+from scripts.paginas_streamlit import A01_calculos_pg_geral_ as resposta
 
 #========================================
 with st.container(): 
@@ -63,19 +36,19 @@ with st.container():
     col_restaurant,col_contrie,col_city,col_vote,col_cuisines=st.columns(5)
 
     with col_restaurant:
-        st.metric(label='Registered restaurants',value=unique_restaurants())
+        st.metric(label='Registered restaurants',value=resposta.unique_restaurants(dados))
     with col_contrie:
-        st.metric(label='Registered contries',value=unique_contries())
+        st.metric(label='Registered contries',value=resposta.unique_contries(dados))
     with col_city:
-        st.metric(label='Registered cities',value=unique_cities())
+        st.metric(label='Registered cities',value=resposta.unique_cities(dados))
     with col_vote:
-        st.metric(label='Ratings',value=unique_votes())
+        st.metric(label='Ratings',value=resposta.unique_votes(dados))
     with col_cuisines:
-        st.metric(label='Cuisines',value=unique_cuisines())
+        st.metric(label='Cuisines',value=resposta.unique_cuisines(dados))
 
 with st.container(): 
 
     st.markdown('## LIST OF RESTAURANTS')
-    st.dataframe(list_of_restaurants(dados))
+    st.dataframe(resposta.list_of_restaurants(dados))
 
 #========================================

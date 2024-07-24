@@ -4,7 +4,7 @@ def barra_lateral_padrao(data,st):
 
     #st.sidebar.image('./imagens/logo.png',width=120)
     st.sidebar.markdown('# FOME ZERO')
-    st.sidebar.markdown('## Nosso negócio é matar a sua fome.')
+    st.sidebar.markdown('## Our Bussines your hungry.')
     st.sidebar.markdown("""---""")
 
     #FILTROS

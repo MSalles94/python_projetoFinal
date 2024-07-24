@@ -27,7 +27,7 @@ st.header('GEOGRAPHIC VIEW')
 #========================================
 #FUNCTIONS TO DATA
 #========================================
-from scripts.paginas_streamlit import A03_calculos_pg_geografico_ as respostas
+from scripts.paginas_streamlit import A02_calculos_pg_geografico_ as respostas
 #========================================
 #SECTIONS
 v_civ_contry,v_city,v_map=st.tabs(['CONTRIES','CITIES','MAP'])

@@ -62,11 +62,15 @@ Ele tem algumas perguntas que devem ser respondidas usando dashboards.
 * Restaurantes
     1. Qual o nome do restaurante que possui a maior quantidade de avaliações
     2. Qual o nome do restaurante com a maior nota média?
+
     3. Qual o nome do restaurante que possui o maior valor de um prato para duas pessoas?
+    
     4. Qual o nome do restaurante de tipo de culinária brasileira que possui a menor média de avaliação?
     5. Qual o nome do restaurante de tipo de culinária brasileira, que é do Brasil, que possui a maior média de avaliação?
+
     6. Os restaurantes que aceitam pedido online são também, na média, os restaurantes que mais possuem avaliações registradas?
     7. Os restaurantes que fazem reservas são também, na média, os restaurantes que possuem o maior valor médio de um prato para duas pessoas?
+    
     8. Os restaurantes do tipo culinária japonesa dos Estados Unidos da America possuem um valor médio de prato para dusa pessoas maior que as churrascarias americanas (BBQ)?
 
 * Tipos de Culinária
