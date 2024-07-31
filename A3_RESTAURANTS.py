@@ -75,6 +75,9 @@ with v_restaurants:
         with top_brazilien_brazil:
             st.markdown('#### Top rated Brazilian cuisine in Brazil')
             st.dataframe(respostas.top_brasilien_restaurants(dados))
-        
+    with st.container():
+        st.markdown('---')
+        st.markdown('#### Top most Expensive Restaurants')
+        st.plotly_chart(respostas.top_avg_price(dados),use_container_width=True)  
          
 #========================================

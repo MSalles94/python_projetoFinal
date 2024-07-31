@@ -1,4 +1,5 @@
 #========================================================
+#general number - first line
 def registred_restaurants(dados):
     aux_df=dados.copy()
     aux_df=aux_df[['Restaurant_ID']].drop_duplicates()
@@ -27,6 +28,8 @@ def total_rate(dados):
     return  (aux_df['total_range'].sum()/aux_df['Votes'].sum()).round(3)
 
 #========================================================
+#general number - second line
+
 def accept_booking(dados):
     aux_df=dados.copy()
     aux_df=aux_df[['Restaurant_ID','Has_Table_booking']].drop_duplicates()
@@ -49,6 +52,7 @@ def accept_delivery(dados):
     return  aux_df['Restaurant_ID'].count()
 
 #========================================================
+#lists rating
 
 def botton_brasilien_restaurants(dados):
 
@@ -74,6 +78,19 @@ def top_brasilien_restaurants(dados):
     return aux_df[:20]
 
 #========================================================
+
+#some graphs
+def top_avg_price(dados):
+
+    from plotly.express import bar
+
+    dados=dados[['Restaurant_ID','Restaurant_Name','Average_Cost_for_two']].drop_duplicates()
+    dados=dados.groupby(['Restaurant_Name'])[['Average_Cost_for_two']].sum().sort_values(by='Average_Cost_for_two',ascending=False)
+    dados=dados[:10].reset_index()
+
+    fig=bar(dados,y='Restaurant_Name',x='Average_Cost_for_two', orientation='h',color='Restaurant_Name')
+    fig.update_layout(showlegend=False)
+    return fig
 
 
 
