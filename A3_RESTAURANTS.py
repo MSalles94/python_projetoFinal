@@ -86,5 +86,17 @@ with v_restaurants:
             st.markdown('#### Average Votes per online restaurants')
             st.plotly_chart(respostas.avg_votes_online(dados),use_container_width=True)
 
+    with st.container():
+        st.markdown('---')
+        v1,v2=st.columns(2)
+        
+        with v1:
+            st.markdown('#### Average cost for booking restaurants')
+            st.plotly_chart(respostas.avg_cost_booking(dados),use_container_width=True)
+        with v2:
+            st.markdown('#### ')
+            #st.plotly_chart(respostas.avg_votes_online(dados),use_container_width=True)
+           
+
          
 #========================================

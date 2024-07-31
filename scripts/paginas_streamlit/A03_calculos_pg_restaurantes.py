@@ -106,4 +106,17 @@ def avg_votes_online(dados):
     return fig
 
 
+def avg_cost_booking(dados):
+
+    from plotly.express import bar
+
+    dados=dados[['Restaurant_ID','Has_Table_booking','Average_Cost_for_two']].drop_duplicates().copy()
+    dados=dados.groupby(['Has_Table_booking']).mean().reset_index()
+
+    fig=bar(dados,x='Has_Table_booking',y='Average_Cost_for_two',color='Has_Table_booking')
+    fig.update_layout(showlegend=False)
+
+    return fig
+
+
 #========================================================
