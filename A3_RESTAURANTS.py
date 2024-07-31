@@ -77,25 +77,23 @@ with v_restaurants:
             st.dataframe(respostas.top_brasilien_restaurants(dados))
     with st.container():
         st.markdown('---')
-        v1,v2=st.columns(2)
-        
-        with v1:
-            st.markdown('#### Top most Expensive Restaurants')
-            st.plotly_chart(respostas.top_avg_price(dados),use_container_width=True)
-        with v2:
-            st.markdown('#### Average Votes per online restaurants')
-            st.plotly_chart(respostas.avg_votes_online(dados),use_container_width=True)
+        st.markdown('#### Top most Expensive Restaurants')
+        st.plotly_chart(respostas.top_avg_price(dados),use_container_width=True)
+     
 
     with st.container():
         st.markdown('---')
-        v1,v2=st.columns(2)
+        v1,v2,v3=st.columns(3)
         
         with v1:
             st.markdown('#### Average cost for booking restaurants')
             st.plotly_chart(respostas.avg_cost_booking(dados),use_container_width=True)
         with v2:
-            st.markdown('#### ')
-            #st.plotly_chart(respostas.avg_votes_online(dados),use_container_width=True)
+            st.markdown('#### Average Votes per online restaurants')
+            st.plotly_chart(respostas.avg_votes_online(dados),use_container_width=True)
+        with v3:
+            st.markdown('#### Average Cost - BBQ versus Japanese ')
+            st.plotly_chart(respostas.cost_BBQ_verus_japa(dados),use_container_width=True)
            
 
          

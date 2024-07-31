@@ -92,6 +92,7 @@ def top_avg_price(dados):
     fig.update_layout(showlegend=False)
     return fig
 
+#========================================================
 def avg_votes_online(dados):
 
     from plotly.express import bar
@@ -115,6 +116,29 @@ def avg_cost_booking(dados):
 
     fig=bar(dados,x='Has_Table_booking',y='Average_Cost_for_two',color='Has_Table_booking')
     fig.update_layout(showlegend=False)
+
+    return fig
+
+def cost_BBQ_verus_japa(dados):
+    from plotly.express import bar
+
+    dados=dados[dados['Country_name'].isin(['United States of America'])].copy()
+
+    dados=dados[['Restaurant_ID','main_Cuisines','Average_Cost_for_two']].drop_duplicates().copy()
+
+
+    japa_usa=dados['main_Cuisines'].isin(['Japanese'])
+    bbq_usa=dados['main_Cuisines'].isin(['BBQ'])
+
+    dados.loc[japa_usa,'Type']='USA Japanese'
+    dados.loc[bbq_usa,'Type']='USA BBQ'
+    dados=dados[~dados['Type'].isna()]
+    dados=dados.groupby(['Type'])[['Average_Cost_for_two']].sum().reset_index()
+
+
+    fig=bar(dados,x='Type',y='Average_Cost_for_two',color='Type')
+    fig.update_layout(showlegend=False)
+
 
     return fig
 
