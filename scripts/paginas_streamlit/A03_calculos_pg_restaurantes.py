@@ -92,6 +92,18 @@ def top_avg_price(dados):
     fig.update_layout(showlegend=False)
     return fig
 
+def avg_votes_online(dados):
+
+    from plotly.express import bar
+
+    dados=dados[['Restaurant_ID','Has_Online_delivery','Votes']].drop_duplicates().copy()
+    dados['Restaurant_ID']=1
+    dados=dados.groupby(['Has_Online_delivery']).sum().reset_index()
+    dados['AVG_votes']=dados['Votes']/dados['Restaurant_ID']
+    fig=bar(dados,x='Has_Online_delivery',y='AVG_votes',color='Has_Online_delivery')
+    fig.update_layout(showlegend=False)
+
+    return fig
 
 
 #========================================================

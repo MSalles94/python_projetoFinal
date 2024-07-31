@@ -77,7 +77,14 @@ with v_restaurants:
             st.dataframe(respostas.top_brasilien_restaurants(dados))
     with st.container():
         st.markdown('---')
-        st.markdown('#### Top most Expensive Restaurants')
-        st.plotly_chart(respostas.top_avg_price(dados),use_container_width=True)  
+        v1,v2=st.columns(2)
+        
+        with v1:
+            st.markdown('#### Top most Expensive Restaurants')
+            st.plotly_chart(respostas.top_avg_price(dados),use_container_width=True)
+        with v2:
+            st.markdown('#### Average Votes per online restaurants')
+            st.plotly_chart(respostas.avg_votes_online(dados),use_container_width=True)
+
          
 #========================================
