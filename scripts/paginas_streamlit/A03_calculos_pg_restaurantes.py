@@ -144,3 +144,83 @@ def cost_BBQ_verus_japa(dados):
 
 
 #========================================================
+
+#   CUISINE
+
+def cuisine_value_for_two(dados):
+    aux_df=dados[['main_Cuisines','Restaurant_ID','Average_Cost_for_two']].drop_duplicates()
+    aux_df=aux_df.groupby(['main_Cuisines'])[['Average_Cost_for_two']].mean().sort_values(by='Average_Cost_for_two',ascending=False)
+    aux_df=aux_df.reset_index()[:20]
+
+    from plotly.express import bar
+
+    y='main_Cuisines'
+    x='Average_Cost_for_two'
+
+    fig=bar(aux_df,x,y,color='main_Cuisines')
+    fig.update_layout(showlegend=False)
+
+
+    return fig
+
+def cuisine_avg_rate(dados):
+    aux_df=dados[['main_Cuisines','Restaurant_ID','Aggregate_rating']].drop_duplicates()
+    aux_df=aux_df.groupby(['main_Cuisines'])[['Aggregate_rating']].mean().sort_values(by='Aggregate_rating',ascending=False)
+    aux_df=aux_df.reset_index()[:20]
+
+    from plotly.express import bar
+
+    y='main_Cuisines'
+    x='Aggregate_rating'
+
+    fig=bar(aux_df,x,y,color='main_Cuisines')
+    fig.update_layout(showlegend=False)
+
+
+    return fig
+
+def cuisine_online_delivers(dados):
+    aux_df=dados[['main_Cuisines','Restaurant_ID','Has_Online_delivery','Is_delivering_now']].drop_duplicates()
+    aux_df=aux_df[aux_df['Has_Online_delivery']=='YES']
+    aux_df=aux_df[aux_df['Is_delivering_now']=='YES']
+    column_name='Online Delivers'
+    aux_df[column_name]=1
+
+    aux_df=aux_df.groupby(['main_Cuisines'])[[column_name]].sum().sort_values(by=column_name,ascending=False)[:20].reset_index()
+
+
+
+    from plotly.express import bar
+
+    y='main_Cuisines'
+    x=column_name
+    fig=bar(aux_df,x,y,color='main_Cuisines')
+    fig.update_layout(showlegend=False)
+
+    return fig
+
+#========================================================
+def top_rating_cuisine(dados,filter_c,worst_rating=True):
+
+    aux_df=dados.loc[dados['main_Cuisines'].isin(filter_c),['Restaurant_ID','Restaurant_Name','Aggregate_rating']].copy().drop_duplicates()
+    aux_df=aux_df.sort_values(by='Aggregate_rating',ascending=worst_rating).reset_index(drop=True)
+    aux_df.index+=1
+
+    if worst_rating:
+        valor_ref=(aux_df['Aggregate_rating']==aux_df['Aggregate_rating'].min()).sum()
+    else:
+        valor_ref=(aux_df['Aggregate_rating']==aux_df['Aggregate_rating'].max()).sum()
+
+    print(aux_df['Aggregate_rating'].max())
+ 
+    if valor_ref>20:
+        aux_df=aux_df[:valor_ref]
+    else:
+        aux_df=aux_df[:20]
+    
+
+
+    return aux_df
+
+#========================================================
+

@@ -95,6 +95,37 @@ with v_restaurants:
             st.markdown('#### Average Cost - BBQ versus Japanese ')
             st.plotly_chart(respostas.cost_BBQ_verus_japa(dados),use_container_width=True)
            
+with v_cuisines:
+    with st.container():
+        st.markdown('### MAIN STATISTICS')
+        v1,v2,v3=st.columns(3)
+
+        with v1: 
+            st.markdown('#### TOP expensive cuisines')
+            st.plotly_chart( respostas.cuisine_value_for_two(dados),use_container_width=True)
+        with v2: 
+            st.markdown('#### TOP rated cuisines')
+            st.plotly_chart( respostas.cuisine_avg_rate(dados),use_container_width=True)
+        with v3:
+            st.markdown('#### Cuisines with online delivering')
+            st.plotly_chart( respostas.cuisine_online_delivers(dados),use_container_width=True)
+
+    with st.container():
+        st.markdown('### TOP RATE - SELECTED CUISINES')
+
+        opcoes=['Arabian','American','Italian','Japanese','Home-made']
+        cuisines_filter=st.multiselect('Cuisines filter',opcoes,default=opcoes)
+
+        v1,v2=st.columns(2)
+
+        with v1:
+            st.markdown('#### Worst rated restaurants')
+            df=respostas.top_rating_cuisine(dados,filter_c=cuisines_filter,worst_rating=True)
+            st.dataframe(df,use_container_width=True)
+        with v2:
+            st.markdown('#### Best rated restaurants')
+            df=respostas.top_rating_cuisine(dados,filter_c=cuisines_filter,worst_rating=False)
+            st.dataframe(df,use_container_width=True)
 
          
 #========================================

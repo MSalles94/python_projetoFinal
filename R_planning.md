@@ -76,14 +76,19 @@ Ele tem algumas perguntas que devem ser respondidas usando dashboards.
 * Tipos de Culinária
     1. Dos restaurantes que possuem o tipo de culinária italiana, qual o nome do restaurante com a maior média de avaliação?
     2. Dos restaurantes que possuem o tipo de culinária italiana, qual o nome do restaurante com a menor média de avaliação?
+
     3. Dos restaurantes de culinária americana, qual o nome do restaurante com maior média de avaliação?
     4. Dos restaurantes de culinária americana, qual o nome do restaurante com menor média de avaliação?
+
     5. Dos restaurantes de culinária árabe, qual o nome do restaurante com maior média de avaliação?
     6. Dos restaurantes de culinária árabe, qual o nome do restaurante com menor média de avaliação?
+
     7. Dos restaurantes de culinária japonesa, qual o nome do restaurante com maior média de avaliação?
     8. Dos restaurantes de culinária japonesa, qual o nome do restaurante com menor média de avaliação?
+
     9. Dos restaurantes de culinária caseira, qual o nome do restaurante com maior média de avaliação?
     10. Dos restaurantes de culinária caseira, qual o nome do restaurante com menor média de avaliação?
+    
     11. Qual o tipo de culinária que possui o maior valor médio de um prato para dois?
     12. Qual o tipo de culinária que possui a maior nota média?
     13. Qual o tipo de culinária que possui mais restaurantes que aceitam pedidos online e fazem entregas?
